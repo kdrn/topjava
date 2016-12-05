@@ -10,6 +10,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,9 +34,16 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed>  getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with correctly exceeded field
-        HashMap<LocalDate, Integer> map = new HashMap<>();
-      //  mealList.stream().map(m -> );
-        // отдельная функция, в которую передается meal, caloriesPerDay
+        Map<LocalDate, Integer> map = mealList.stream().collect(Collectors.toMap(k -> k.getDateTime().toLocalDate(),
+                v -> caloriesPerDay - v.getCalories(),
+                (calorie1, calorie2) -> {
+                    System.out.println("duplicate key found! ");
+                    return calorie1 - Math.abs(calorie2 - caloriesPerDay);
+                }));
+
+
+        System.out.println(map);
+
         return null;
     }
 
