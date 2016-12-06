@@ -53,7 +53,6 @@ public class UserMealsUtil {
                         true));
             }
         }
-
         return resultList;
     }
 }
