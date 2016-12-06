@@ -41,22 +41,15 @@ public class UserMealsUtil {
                     return calorie1 - Math.abs(calorie2 - caloriesPerDay);
                 }));
 
-       List<UserMealWithExceed> resultList =  mealList.stream()
+        List<UserMealWithExceed> resultList = mealList.stream()
                 .filter(m -> TimeUtil.isBetween(m.getDateTime().toLocalTime(), startTime, endTime))
                 .map(m -> {
                             int calories = map.get(m.getDateTime().toLocalDate());
-                            return calories > caloriesPerDay ? new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(),
+                            return calories < 0 ? new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(),
                                     true) : new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(), false);
                         }
                 ).collect(Collectors.toList());
 
-//        System.out.println(resultList);
-
-        resultList.forEach(m -> System.out.println(m));
-        return null;
-    }
-
-    public int doSomething(UserMeal meal, int caloriesPerDay) {
-        return 0;
+        return resultList;
     }
 }
