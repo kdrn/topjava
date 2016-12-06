@@ -37,13 +37,13 @@ public class UserMealsUtil {
         Map<LocalDate, List<UserMeal>> map = mealList.stream().collect(Collectors
                 .groupingBy(m -> m.getDateTime().toLocalDate()));
 
-        mealList.stream().map(m -> {
-            map.get(m.getDateTime().toLocalDate()).stream().mapToInt(meal -> meal.getCalories()).sum() > caloriesPerDay ?
-            return new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(), true) :
-            return new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(), false);
-        }).collect(Collectors.toList());
+        List<UserMealWithExceed> resultList =  mealList.stream().map(m -> {
+            int sum = map.get(m.getDateTime().toLocalDate()).stream().mapToInt(meal -> meal.getCalories()).sum();
+                 return sum  > caloriesPerDay ? new UserMealWithExceed(m.getDateTime(), m.getDescription(),
+                         m.getCalories(), true) :
+            new UserMealWithExceed(m.getDateTime(), m.getDescription(), m.getCalories(), false);
+        }).filter(v -> TimeUtil.isBetween(v.getDateTime().toLocalTime(), startTime, endTime)).collect(Collectors.toList());
 
-
-        return null;
+        return resultList;
     }
 }
