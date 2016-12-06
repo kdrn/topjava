@@ -36,10 +36,7 @@ public class UserMealsUtil {
         // TODO return filtered list with correctly exceeded field
         Map<LocalDate, Integer> map = mealList.stream().collect(Collectors.toMap(k -> k.getDateTime().toLocalDate(),
                 v -> caloriesPerDay - v.getCalories(),
-                (calorie1, calorie2) -> {
-                    System.out.println("duplicate key found! ");
-                    return calorie1 - Math.abs(calorie2 - caloriesPerDay);
-                }));
+                (calorie1, calorie2) -> calorie1 - Math.abs(calorie2 - caloriesPerDay)));
 
         List<UserMealWithExceed> resultList = mealList.stream()
                 .filter(m -> TimeUtil.isBetween(m.getDateTime().toLocalTime(), startTime, endTime))
