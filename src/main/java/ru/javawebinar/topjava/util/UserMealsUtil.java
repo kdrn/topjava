@@ -51,6 +51,11 @@ public class UserMealsUtil {
             {// добавляем в результат новый объект UserMealWithExceed со значением true
                 resultList.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
                         true));
+            } else if (mapCounter.get(meal.getDateTime().toLocalDate()) >= 0 && TimeUtil.isBetween(meal.getDateTime().toLocalTime(),
+                    startTime, endTime)) //если значение калорий за этот день в счетчике-МАПе больше или равно 0 и время в интересуемом промежутке
+            {// добавляем в результат новый объект UserMealWithExceed со значением false
+                resultList.add(new UserMealWithExceed(meal.getDateTime(), meal.getDescription(), meal.getCalories(),
+                        false));
             }
         }
         return resultList;
