@@ -2,9 +2,11 @@ package ru.javawebinar.topjava.util;
 
 import org.springframework.util.StringUtils;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -31,5 +33,10 @@ public class DateTimeUtil {
 
     public static LocalTime parseLocalTime(String str) {
         return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+    }
+
+    public static Timestamp toTimestamp (LocalDateTime ldt)
+    {
+        return Timestamp.from(ldt.toInstant(ZoneOffset.ofHours(0)));
     }
 }
