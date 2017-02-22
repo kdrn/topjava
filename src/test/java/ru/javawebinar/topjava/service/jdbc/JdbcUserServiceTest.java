@@ -13,15 +13,4 @@ import static ru.javawebinar.topjava.Profiles.JDBC;
 @ActiveProfiles(JDBC)
 public class JdbcUserServiceTest extends AbstractUserServiceTest {
 
-//    @Autowired
-//    private static Environment env;
-//
-//    @BeforeClass
-//    public static void check() throws Exception {
-//        Assume.assumeTrue(isJdbc());
-//    }
-//
-//    private static boolean isJdbc() {
-//        return env.acceptsProfiles(Profiles.JDBC);
-//    }
 }

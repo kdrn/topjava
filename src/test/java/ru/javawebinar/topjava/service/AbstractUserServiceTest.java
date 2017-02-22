@@ -1,9 +1,11 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import ru.javawebinar.topjava.UserTestData;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.JpaUtil;
@@ -21,14 +23,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     protected UserService service;
 
-    @Autowired
-    protected JpaUtil jpaUtil;
 
-    @Before
-    public void setUp() throws Exception {
-        service.evictCache();
-        jpaUtil.clear2ndLevelHibernateCache();
-    }
 
     @Test
     public void testSave() throws Exception {
@@ -93,5 +88,17 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "  ", Role.ROLE_USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "password", 9, true, Collections.emptySet())), ConstraintViolationException.class);
         validateRootCause(() -> service.save(new User(null, "User", "invalid@yandex.ru", "password", 10001, true, Collections.emptySet())), ConstraintViolationException.class);
+    }
+
+    @Test
+    public void testRoles() throws Exception {
+        User admin = service.get(ADMIN_ID);
+        Assert.assertEquals(UserTestData.ROLES, admin.getRoles());
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testRoleNotFound() {
+        User user = service.get(USER_ID);
+        Assert.assertTrue(user.getRoles().contains(Role.ROLE_ADMIN));
     }
 }

@@ -68,7 +68,7 @@ public class MealsController {
         int id = getId(request);
         LOG.info("Delete {}", id);
         mealService.delete(id, AuthorizedUser.id());
-        return getMeals(model);
+        return "redirect:meals";
     }
 
     @RequestMapping(method = RequestMethod.POST, params = "action=filter")
@@ -104,7 +104,7 @@ public class MealsController {
             meal.setId(Integer.parseInt(request.getParameter("id")));
             mealService.update(meal, AuthorizedUser.id());
         }
-        return getMeals(model);
+        return "redirect:meals";
     }
 
     private int getId(HttpServletRequest request) {
