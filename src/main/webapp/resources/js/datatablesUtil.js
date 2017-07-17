@@ -1,6 +1,6 @@
 function makeEditable() {
     $('.delete').click(function () {
-        deleteRow($(this).attr("id"));
+        deleteRow(this.parentNode.parentNode.id);
     });
 
     $('#detailsForm').submit(function () {
@@ -20,7 +20,7 @@ function add() {
 
 function deleteRow(id) {
     $.ajax({
-        url: ajaxUrl + id,
+        url: ajaxUrl + '/' + id,
         type: 'DELETE',
         success: function () {
             updateTable();

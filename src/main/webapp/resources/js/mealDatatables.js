@@ -8,19 +8,16 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "name"
+                "data": "dateTime"
             },
             {
-                "data": "email"
+                "data": "description"
             },
             {
-                "data": "roles"
+                "data": "calories"
             },
             {
-                "data": "enabled"
-            },
-            {
-                "data": "registered"
+                "data": "exceed"
             },
             {
                 "defaultContent": "Edit",
